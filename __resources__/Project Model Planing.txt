@@ -1,0 +1,67 @@
+# User Profile
+class UserProfile:
+    user : OneToOne(User)
+    mobile : int
+    address : textField
+    profilePicture : ImageField
+
+
+# Product
+class ProductCategory:
+    name : str
+    status : Boolean
+
+
+class Product:
+    product_category : FK(ProductCategory)
+    name : str
+    price : decimal
+    description : textField
+    cover_image : ImageField
+    sku : str
+    status : Boolean
+
+
+class ProductImages:
+    product : FK(Product)
+    image : ImageField
+
+
+# Cart
+class Cart:
+    user : FK(User)
+    product : FK(Product)
+    quantity : int(default=1)
+
+# Order
+class Order:
+    user : Fk(User)
+    date : DateTime(Auto)
+    user_name : str
+    address : TextField
+    payment : Boolean
+    status : str ('pending', 'in-progress', 'delivered', 'canceled')
+
+class OrderDetails:
+    order : FK(Order)    
+    product : FK(Product)
+    quantity : int
+    price : decimal
+
+
+class Review:
+    user : Fk(User)
+    product : FK(Product)
+    review : TextField()
+    date : DateTime(Auto)
+    status : Boolean
+
+
+class Payment:
+    order : FK(Order)
+    payment_status : str
+    payment_method : str
+    transaction_id : str
+    payment_id : str
+
+
