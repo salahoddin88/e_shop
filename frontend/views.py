@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from products.models import ProductCategory, Product
+from django.contrib.auth import login
+from django.contrib.auth.models import User
 
 
 def home_page(request):
@@ -19,6 +21,7 @@ class ProductListingView(View):
     def get(self, request, product_category_id=None):
         productCategories = ProductCategory.objects.filter(status=True)
         products = Product.objects.filter(status=True, product_category_id=product_category_id)
+        print(products)
         context = {
             'productCategories': productCategories,
             'products': products
@@ -38,4 +41,18 @@ class ProductDetailsView(View):
             'productDetails': productDetails,
             'relatedProducts': relatedProducts
         }
+        user = User.objects.get(id=2)
+        
         return render(request, 'product-details.html', context)
+
+
+
+def test_login(request):
+    user = User.objects.get(id=2)
+    login(request, user)
+    print(request.user)
+
+    if request.user.is_authenticated:
+        print("Hello")
+    else:
+        print("Not loggedIn")

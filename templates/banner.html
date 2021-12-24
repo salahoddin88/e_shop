@@ -9,7 +9,7 @@
                         <i class="fa fa-bars"></i>
                         <span>All departments</span>
                     </div>
-                    <ul>
+                    <ul style="display: none;">
                         {% for productCategory in productCategories %}
                         <li><a
                                 href="{% url 'ProductListingView' product_category_id=productCategory.id %}">{{productCategory.name|title}}</a>
@@ -35,14 +35,6 @@
                             <h5>+65 11.188.888</h5>
                             <span>support 24/7 time</span>
                         </div>
-                    </div>
-                </div>
-                <div class="hero__item set-bg" data-setbg="{% static 'img/banner/home-page.png' %}">
-                    <div class="hero__text">
-                        <span>FRUIT FRESH</span>
-                        <h2>Vegetable <br />100% Organic</h2>
-                        <p>Free Pickup and Delivery Available</p>
-                        <a href="#" class="primary-btn">SHOP NOW</a>
                     </div>
                 </div>
             </div>
