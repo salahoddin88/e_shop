@@ -10,7 +10,7 @@ def home_page(request):
     latestProductCategories = ProductCategory.objects.filter(status=True).order_by('-id')[:5]
     context = {
         'productCategories': productCategories,
-        'latestProductCategories': latestProductCategories
+        'latestProductCategories': latestProductCategories,
     }
     return render(request, 'home-page.html', context)
 
