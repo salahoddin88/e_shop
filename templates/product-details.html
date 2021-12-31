@@ -6,35 +6,26 @@
 <section class="product-details spad">
     <div class="container">
         <div class="row">
+            
             <div class="col-lg-6 col-md-6">
                 <div class="product__details__pic">
                     <div class="product__details__pic__item">
                         <img class="product__details__pic__item--large" src="{{productDetails.cover_image.url}}"
                             alt="">
                     </div>
-                    <!-- <div class="product__details__pic__slider owl-carousel">
-                        <img data-imgbigurl="img/product/details/product-details-2.jpg"
-                            src="img/product/details/thumb-1.jpg" alt="">
-                        <img data-imgbigurl="img/product/details/product-details-3.jpg"
-                            src="img/product/details/thumb-2.jpg" alt="">
-                        <img data-imgbigurl="img/product/details/product-details-5.jpg"
-                            src="img/product/details/thumb-3.jpg" alt="">
-                        <img data-imgbigurl="img/product/details/product-details-4.jpg"
-                            src="img/product/details/thumb-4.jpg" alt="">
-                    </div> -->
+
+                    <div class="product__details__pic__slider owl-carousel">
+                        {% for productImage in productDetails.ProductImages.all %}
+                            <img data-imgbigurl="{{productImage.image.url}}"
+                            src="{{productImage.image.url}}" alt="">
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6">
                 <div class="product__details__text">
+                    
                     <h3>{{productDetails.name|title}}</h3>
-                    <!-- <div class="product__details__rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-half-o"></i>
-                        <span>(18 reviews)</span>
-                    </div> -->
                     <div class="product__details__price">${{productDetails.price}}</div>
                     {% if request.user.is_authenticated %}
                         <form method="post" action="{% url 'addToCart' %}">

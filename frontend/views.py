@@ -41,8 +41,8 @@ class ProductDetailsView(View):
             'productDetails': productDetails,
             'relatedProducts': relatedProducts
         }
-        user = User.objects.get(id=2)
-        
+        # user = User.objects.get(id=2)
+        # login(request, user)
         return render(request, 'product-details.html', context)
 
 

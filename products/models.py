@@ -28,7 +28,7 @@ class Product(models.Model):
 
 class ProductImages(models.Model):
     """ Product can have multiple images """
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="ProductImages")
     image = models.ImageField()
     status = models.BooleanField(default=True)
 

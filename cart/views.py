@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from . models import Cart
 from django.views import View
 from products.models import ProductCategory, Product
+from django.http import HttpResponse
 
 def addToCart(request):
 
@@ -52,7 +53,8 @@ class MyCart(View):
                 'product_name': cartProduct.product.name,
                 'product_price': cartProduct.product.price,
                 'quantity': cartProduct.quantity,
-                'productTotal': productTotal
+                'productTotal': productTotal,
+                'cart_id': cartProduct.id
             }
 
         total = shippingCost + subTotal
@@ -63,5 +65,52 @@ class MyCart(View):
             'subTotal':subTotal,
             'shippingCost': shippingCost,
             'total':total,
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        cartIds = request.POST.getlist('cart_id')
+        quantites = request.POST.getlist('quantity')
+        for cartKey, cartId in enumerate(cartIds):
+            try:
+                cartObject = Cart.objects.get(id=cartId)
+                if quantites[cartKey] == '0':
+                    cartObject.delete()
+                else:
+                    cartObject.quantity = quantites[cartKey]
+                    cartObject.save()
+            except Cart.DoesNotExist:
+                pass
+        
+        return redirect('MyCart')
+
+
+class Checkout(View):
+    template_name = 'checkout.html'
+
+    def get(self, request):
+        productCategories = ProductCategory.objects.filter(status=True)
+        cartProducts = Cart.objects.filter(user=request.user)
+        carts = {}
+        subTotal = 0
+        total = 0
+        shippingCost = 50
+        for key, cartProduct in enumerate(cartProducts):
+            productTotal = int(cartProduct.quantity) * int(cartProduct.product.price)
+            total += productTotal
+            subTotal += productTotal
+            carts[key] = {
+                'product_name': cartProduct.product.name,
+                'productTotal': productTotal,
+            }
+
+        total = shippingCost + subTotal
+        carts = list(carts.values())
+        context = {
+            'productCategories': productCategories,
+            'cartProducts': carts,
+            'subTotal': subTotal,
+            'shippingCost': shippingCost,
+            'total': total,
         }
         return render(request, self.template_name, context)
