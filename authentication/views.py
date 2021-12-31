@@ -20,8 +20,11 @@ class Login(View):
 
     def post(self, request):
         form = self.form_class(data=request.POST)
+        redirectURL = request.GET.get('next')
         if form.is_valid():
             AuthLogin(request, form.get_user())
+            if redirectURL:
+                return redirect(redirectURL)
             return redirect('home_page')
         context = {
             'productCategories': self.productCategories,

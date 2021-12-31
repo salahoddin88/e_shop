@@ -5,6 +5,10 @@ from django.contrib.auth import login
 from django.contrib.auth.models import User
 
 
+#Assignments 
+""" maintain stocks """
+""" Make Logo and title Dynamic : Create new app website setting Note:Use get_or_create(id=1) """
+
 def home_page(request):
     productCategories = ProductCategory.objects.filter(status=True)
     latestProductCategories = ProductCategory.objects.filter(status=True).order_by('-id')[:5]
@@ -20,11 +24,39 @@ class ProductListingView(View):
     
     def get(self, request, product_category_id=None):
         productCategories = ProductCategory.objects.filter(status=True)
-        products = Product.objects.filter(status=True, product_category_id=product_category_id)
-        print(products)
+        search = request.GET.get('search')
+        sorting = request.GET.get('sorting')
+        minPrice = request.GET.get('min')
+        maxPrice = request.GET.get('max')
+
+        searchDict = {
+            'status': True
+        }
+
+        if minPrice:
+            minPrice = int(minPrice.replace('$',''))
+            searchDict['price__gte'] = minPrice
+
+        if maxPrice:
+            maxPrice = int(maxPrice.replace('$',''))
+            searchDict['price__lte'] = maxPrice
+            
+        if product_category_id and product_category_id != 'None':
+            searchDict['product_category_id'] = product_category_id
+
+        if search:
+            searchDict['name__contains'] = search
+        
+        if sorting == "low":
+            products = Product.objects.filter(**searchDict).order_by('price')
+        elif sorting == 'high':
+            products = Product.objects.filter(**searchDict).order_by('-price')
+        else:
+            products = Product.objects.filter(**searchDict)
         context = {
             'productCategories': productCategories,
-            'products': products
+            'products': products,
+            'product_category_id': product_category_id
         }
         return render(request, 'product-listing.html', context)
 
@@ -56,3 +88,4 @@ def test_login(request):
         print("Hello")
     else:
         print("Not loggedIn")
+

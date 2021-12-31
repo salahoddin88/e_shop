@@ -3,7 +3,11 @@ from . models import Cart
 from django.views import View
 from products.models import ProductCategory, Product
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
+
+@login_required
 def addToCart(request):
 
     product_id = request.POST.get('product_id')
@@ -32,6 +36,7 @@ def addToCart(request):
     return redirect('ProductDetailsView', product_id=product_id)
 
 
+@method_decorator(login_required, name='dispatch')
 class MyCart(View):
     
     template_name = 'my-cart.html'
@@ -85,6 +90,7 @@ class MyCart(View):
         return redirect('MyCart')
 
 
+@method_decorator(login_required, name='dispatch')
 class Checkout(View):
     template_name = 'checkout.html'
 

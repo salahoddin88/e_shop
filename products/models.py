@@ -20,10 +20,12 @@ class Product(models.Model):
     cover_image = models.ImageField()
     sku = models.CharField(max_length=255)
     status = models.BooleanField(default=True)
+    stock = models.IntegerField(default=0)
 
     def __str__(self):
         """ String Representation of object"""
         return str(self.name)
+
 
 
 class ProductImages(models.Model):

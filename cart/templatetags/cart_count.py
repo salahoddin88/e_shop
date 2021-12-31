@@ -8,7 +8,9 @@ register = template.Library()
 @register.simple_tag
 def cartCount(request):
     """  Display cart count based on user's current session  """
-    carts = Cart.objects.filter(user=request.user).aggregate(cart_sum=Sum('quantity'))
-    return carts['cart_sum']
+    if request.user.is_authenticated:
+        carts = Cart.objects.filter(user=request.user).aggregate(cart_sum=Sum('quantity'))
+        return carts['cart_sum']
+    return 0
 
 
