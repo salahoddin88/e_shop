@@ -1,0 +1,15 @@
+Deadline : 14-01-2022
+1. User Profile
+2. My Orders
+    2.1 Order details
+3. Manage Stock (template)
+4. Coupon
+    1. Percentage Off
+    2. Flat Discount
+5. Website Setting
+    1. Make logo and title dynamic
+6. Blogs (Non Optional)
+    1. Use Slugfield for blog details
+    Note: Over ride model save method
+
+
