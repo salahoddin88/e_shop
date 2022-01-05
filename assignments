@@ -9,7 +9,5 @@ Deadline : 14-01-2022
 5. Website Setting
     1. Make logo and title dynamic
 6. Blogs (Non Optional)
-    1. Use Slugfield for blog details
+    1. Use Slugfield in URL for blog details
     Note: Over ride model save method
-
-
