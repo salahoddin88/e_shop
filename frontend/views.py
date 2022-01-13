@@ -79,13 +79,3 @@ class ProductDetailsView(View):
 
 
 
-def test_login(request):
-    user = User.objects.get(id=2)
-    login(request, user)
-    print(request.user)
-
-    if request.user.is_authenticated:
-        print("Hello")
-    else:
-        print("Not loggedIn")
-
