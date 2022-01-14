@@ -1,4 +1,4 @@
-Deadline : 14-01-2022
+Deadline : 21-01-2022
 1. User Profile
 2. My Orders
     2.1 Order details
@@ -11,3 +11,6 @@ Deadline : 14-01-2022
 6. Blogs (Non Optional)
     1. Use Slugfield in URL for blog details
     Note: Over ride model save method
+
+
+API's for the same
