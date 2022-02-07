@@ -62,6 +62,6 @@ class Payment(models.Model):
     
     def __str__(self):
         """ String Representation of object"""
-        return str(self.transaction_id)
+        return str(self.payment_id)
 
 
